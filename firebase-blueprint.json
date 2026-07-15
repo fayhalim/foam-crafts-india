@@ -1,0 +1,149 @@
+{
+  "entities": {
+    "SiteSettings": {
+      "title": "Site Settings",
+      "description": "Global settings for the website",
+      "type": "object",
+      "properties": {
+        "companyName": { "type": "string", "maxLength": 100 },
+        "brandName": { "type": "string", "maxLength": 100 },
+        "tagline": { "type": "string", "maxLength": 200 },
+        "logoUrl": { "type": "string" },
+        "faviconUrl": { "type": "string" },
+        "contactNumber": { "type": "string", "maxLength": 50 },
+        "whatsappNumber": { "type": "string", "maxLength": 50 },
+        "emailAddress": { "type": "string", "maxLength": 100 },
+        "businessAddress": { "type": "string", "maxLength": 500 },
+        "googleMapsEmbed": { "type": "string" },
+        "businessHours": { "type": "string", "maxLength": 200 },
+        "gstin": { "type": "string", "maxLength": 50 },
+        "socialFacebook": { "type": "string" },
+        "socialInstagram": { "type": "string" },
+        "socialLinkedIn": { "type": "string" },
+        "socialYoutube": { "type": "string" },
+        "socialX": { "type": "string" },
+        "themeColorPrimary": { "type": "string", "maxLength": 50 },
+        "heroText": { "type": "string", "maxLength": 200 },
+        "footerContent": { "type": "string", "maxLength": 1000 },
+        "seoTitle": { "type": "string", "maxLength": 100 },
+        "seoDescription": { "type": "string", "maxLength": 300 },
+        "seoKeywords": { "type": "string", "maxLength": 300 },
+        "googleAnalyticsId": { "type": "string", "maxLength": 50 },
+        "googleSearchConsoleId": { "type": "string", "maxLength": 100 },
+        "facebookPixelId": { "type": "string", "maxLength": 50 },
+        "updatedAt": { "type": "number" }
+      }
+    },
+    "Product": {
+      "title": "Product",
+      "description": "A product available for purchase",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "maxLength": 200 },
+        "description": { "type": "string" },
+        "sku": { "type": "string", "maxLength": 100 },
+        "categoryId": { "type": "string", "maxLength": 128 },
+        "regularPrice": { "type": "number" },
+        "salePrice": { "type": "number" },
+        "stockQuantity": { "type": "number" },
+        "status": { "type": "string", "enum": ["In Stock", "Out of Stock"] },
+        "isBestSeller": { "type": "boolean" },
+        "isFeatured": { "type": "boolean" },
+        "isNewArrival": { "type": "boolean" },
+        "specifications": { "type": "string" },
+        "warranty": { "type": "string" },
+        "careInstructions": { "type": "string" },
+        "tags": { "type": "array" },
+        "images": { "type": "array" },
+        "featuredImage": { "type": "string" },
+        "availableSizes": { "type": "array" },
+        "thicknessOptions": { "type": "array" },
+        "firmness": { "type": "string", "maxLength": 100 },
+        "comfortLevel": { "type": "string", "maxLength": 100 },
+        "deliveryTime": { "type": "string", "maxLength": 100 },
+        "shippingWeight": { "type": "number" },
+        "gstPercentage": { "type": "number" },
+        "createdAt": { "type": "number" },
+        "updatedAt": { "type": "number" }
+      }
+    },
+    "Category": {
+      "title": "Category",
+      "description": "Product category",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "maxLength": 100 },
+        "description": { "type": "string" },
+        "bannerImage": { "type": "string" },
+        "seoTitle": { "type": "string", "maxLength": 100 },
+        "seoDescription": { "type": "string", "maxLength": 300 },
+        "orderIndex": { "type": "number" },
+        "createdAt": { "type": "number" },
+        "updatedAt": { "type": "number" }
+      }
+    },
+    "Media": {
+      "title": "Media",
+      "description": "Uploaded media files like banners and images",
+      "type": "object",
+      "properties": {
+        "url": { "type": "string" },
+        "filename": { "type": "string", "maxLength": 200 },
+        "type": { "type": "string", "maxLength": 50 },
+        "tags": { "type": "array" },
+        "createdAt": { "type": "number" }
+      }
+    },
+    "Order": {
+      "title": "Order",
+      "description": "Customer order",
+      "type": "object",
+      "properties": {
+        "customerId": { "type": "string", "maxLength": 128 },
+        "items": { "type": "array" },
+        "totalAmount": { "type": "number" },
+        "status": { "type": "string", "enum": ["Pending", "Confirmed", "Processing", "Shipped", "Delivered", "Cancelled", "Refunded"] },
+        "shippingDetails": { "type": "object" },
+        "createdAt": { "type": "number" },
+        "updatedAt": { "type": "number" }
+      }
+    },
+    "UserRole": {
+      "title": "User Role",
+      "description": "Role definition for an admin user",
+      "type": "object",
+      "properties": {
+        "email": { "type": "string", "maxLength": 100 },
+        "role": { "type": "string", "enum": ["Super Admin", "Admin", "Manager", "Editor"] },
+        "createdAt": { "type": "number" },
+        "updatedAt": { "type": "number" }
+      }
+    }
+  },
+  "firestore": {
+    "/settings/site": {
+      "schema": "SiteSettings",
+      "description": "Global settings document"
+    },
+    "/products/{productId}": {
+      "schema": "Product",
+      "description": "A single product"
+    },
+    "/categories/{categoryId}": {
+      "schema": "Category",
+      "description": "A product category"
+    },
+    "/media/{mediaId}": {
+      "schema": "Media",
+      "description": "A media file record"
+    },
+    "/orders/{orderId}": {
+      "schema": "Order",
+      "description": "An order"
+    },
+    "/roles/{roleId}": {
+      "schema": "UserRole",
+      "description": "Admin roles by email or UID"
+    }
+  }
+}

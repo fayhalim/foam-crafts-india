@@ -1,0 +1,6 @@
+{
+  "name": "Foam Crafts India",
+  "description": "Premium Mattress Manufacturer in Varanasi. Official website of Foam Crafts India (Ecosoft).",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

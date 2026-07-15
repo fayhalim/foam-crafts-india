@@ -1,0 +1,53 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    match /{document=**} { 
+      allow read, write: if false; 
+    }
+
+    function isSignedIn() { 
+      return request.auth != null && request.auth.token.email_verified == true; 
+    }
+
+    function isAdmin() {
+      // Fallback to the owner's email, plus checking roles collection
+      return isSignedIn() && (
+        request.auth.token.email == 'fayhalim2007@gmail.com' ||
+        exists(/databases/$(database)/documents/roles/$(request.auth.uid))
+      );
+    }
+
+    match /settings/site {
+      allow read: if true; // Public can read settings
+      allow write: if isAdmin();
+    }
+
+    match /products/{productId} {
+      allow read: if true; // Public can read products
+      allow write: if isAdmin();
+    }
+
+    match /categories/{categoryId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /media/{mediaId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /orders/{orderId} {
+      allow create: if true; // Anyone can create an order (even anonymous for now, or just signed in customers)
+      allow read: if isAdmin(); // Only admins can read all orders for now (customer view not fully implemented yet)
+      allow update, delete: if isAdmin();
+    }
+
+    match /roles/{roleId} {
+      allow read: if isAdmin();
+      allow write: if isAdmin() && request.auth.token.email == 'fayhalim2007@gmail.com'; // Only super admin can manage roles
+    }
+  }
+}
